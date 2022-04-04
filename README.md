@@ -1,2 +1,1 @@
-# nutrition_4-CV_Project-
-Computer vision project with multicampus
+# 영양4조
