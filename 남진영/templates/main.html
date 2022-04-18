@@ -4,7 +4,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
 			rel="stylesheet"
 		/>
         
@@ -23,40 +23,14 @@
         <title>Nutrition_4</title>
         <link rel="stylesheet" href="/static/style.css" />
     </head>
+
 	<body>
         <form method="post" action="/print" enctype="multipart/form-data">
             <section class="section">
                 <h2 class="title">개인 맞춤형 식단 필터링 서비스</h2>
-                <h5 class="subtitle">정보를 입력해주세요</h5>
-            <center>
-            <div class= 'pt-1 Select Gender'>
-                <select name = 'gender'>
-                <option type='text', value='male'>남자</option>
-                <option type='text', value='female'>여자</option>
-                </select>
+                <h5 class="subtitle">카카오로그인을 통한 성별/나이정보 동기화기반 서비스 제공</h5>
             </div>
-            </center>
-            <center>
-            <div class= 'pt-1 Input Ages'>
-                <input type='number' min='19' max="64" name="ages"></option>
-            </div>
-            </center>
-            <center>
-            <div class= 'pt-1 Select Illness'>
-                <select name = 'illness'>
-                <option type='text', value='A'>비만</option>
-                <option type='text', value='B'>당뇨</option>
-                <option type='text', value='C'>고혈압</option>
-                <option type='text', value='D'>고지혈증</option>
-                <option type='text', value='E'>신부전증</option>
-                </select>
-            </div>
-            </center>
-            <center>
-                <div class='pt-2 mb-2 submitbutton'>
-                  <input type="submit", Value=작동>
-                </div>
-            </center>
+
             <div class="container file-upload">
                 <div class="image-upload-wrap" style="width: 65%; margin: 0 auto;">
                     <input
@@ -71,18 +45,64 @@
                         <h3 class="mb-5 pd-5 pt-4 upload-text">음식사진을 올려주세요</h3>
                     </div>
                 </div>
+
                 <div class="file-upload-content">
                     <img class="file-upload-image" id="food-image" src="#" alt="your image" />
-                    <!-- <p class="result-message"></p> -->
-                    <div id="label-container"></div>
+                    
+                    <div id="label-container">사진을 지우시려면 아래 버튼 눌러주세요</div>
                     <div class="image-title-wrap">
                         <button type="button" onclick="removeUpload()" class="remove-image">
-                            Remove
-                            <span class="image-title">Uploaded Image</span>
+                            이미지 삭제
+                            <span class="image-title">업로드된 이미지</span>
                         </button>
                     </div>
                 </div>
             </div>
+            <center>
+                <div class='pt-2 mb-2 submitbutton'>
+                  <input type="submit", Value=작동>
+                </div>
+            </center>
+        </form>
+        
+        <script>
+			// input file들이 들어오면 아래 코드들이 실행
+			function readURL(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						$('.image-upload-wrap').hide();
+						$('.file-upload-image').attr('src', e.target.result);
+						$('.file-upload-content').show();
+						$('.image-title').html(input.files[0].name);
+					    };
+					reader.readAsDataURL(input.files[0]);
+					init().then(() => {
+						console.log('hello');
+						predict();
+					    });
+				    }
+                else {
+					removeUpload();
+				    }
+			    }
+
+			function removeUpload() {
+				$('.file-upload-input').replaceWith($('.file-upload-input').clone());
+				$('.file-upload-content').hide();
+				$('.image-upload-wrap').show();
+                
+			    $('.image-upload-wrap').bind('dragover', 
+                    function () {
+				        $('.image-upload-wrap').addClass('image-dropping');
+			            });
+			    $('.image-upload-wrap').bind('dragleave',
+                    function () {
+				        $('.image-upload-wrap').removeClass('image-dropping');
+			            });
+                }
+		</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     </body>
 	
 </html>

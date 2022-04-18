@@ -1,5 +1,5 @@
 body {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Gaegu';
 	background-color: #fff;
 }
 .file-upload {
@@ -51,7 +51,7 @@ body {
 	cursor: pointer;
 }
 .image-upload-wrap {
-	border: 4px dashed #f582ff;
+	border: 4px dashed #0026ff;
 	position: relative;
 }
 .image-upload-wrap:hover {
@@ -59,7 +59,7 @@ body {
 	border: 4px dashed #fff;
 }
 .image-dropping {
-	background-color: #f9bbff;
+	background-color: #ff0000;
 	border: 4px dashed #fff;
 }
 .image-title-wrap {
@@ -74,7 +74,7 @@ body {
 	font-weight: 100;
 	text-transform: uppercase;
 	color: #15824b;
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Gaegu', sans-serif;
 	font-size: 1.5rem;
 	line-height: 1.53;
 	text-align: center;
@@ -117,7 +117,7 @@ body {
 }
 
 .navbar-light .navbar-brand {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Gaegu', sans-serif;
 	line-height: 1.68;
 	text-align: left;
 	color: #35465d;
@@ -132,14 +132,14 @@ body {
 }
 
 .title {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Gaegu', sans-serif;
 	line-height: 1.67;
 	text-align: center;
 	color: #35465d;
 }
 
 .subtitle {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Gaegu', sans-serif;
 	line-height: 1.53;
 	text-align: center;
 	color: #35465d;
@@ -156,7 +156,7 @@ body {
 }
 
 .github-link {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Gaegu', sans-serif;
 	font-weight: bolder;
 	font-size: 1.0rem;
 	line-height: 1.71;
@@ -166,7 +166,7 @@ body {
 }
 
 .github-link: hover {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Gaegu', sans-serif;
 	font-weight: bolder;
 	font-size: 1.0rem;
 	line-height: 1.71;
@@ -202,7 +202,7 @@ body {
 
 .upload-text {
 	width: 50%;
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Gaegu', sans-serif;
 	font-size: 1.6 rem;
 	line-height: 1.53;
 	text-align: center;
