@@ -1,148 +1,193 @@
-<!DOCTYPE html>
 <html>
-    <head>
-    <!-- 탭 아이콘 -->
-        <link rel="shortcut icon" href="../img/1f951.svg" />
+	<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
+			rel="stylesheet"
+		/>
+    <link rel="shortcut icon" href="../img/1f951.svg" />
+    
     <!-- Required meta tags -->
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <!-- Bootstrap CSS -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-            crossorigin="anonymous"
-        />
-    <!-- 타이틀 -->
-        <title>Nutrition_4</title>
-    <!-- CSS 참조 -->
-        <link rel="stylesheet" href="../../static/style.css" />
-        <!-- 폰트 -->
-            <link
-                href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
-                rel="stylesheet"/>
-        <!-- 탭 스크립트 -->
-            <script src="https:////cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <!-- 차트 스크립트 -->
-            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    </head>
+		<link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+        crossorigin="anonymous"
+    />
 
-    <body>
-        <!-- Navbar -->
-        <nav class="navbar navbar-ligth" style="background-color: #fcd6f9ec;">
-            <!-- Navbar content -->
-            <ol class="breadcrumb">
-                &nbsp;&nbsp;&nbsp; <img src="../img/1f951.svg" width="25" height="25"/> &nbsp;&nbsp;
-                <li class="breadcrumb-item"><a href="/" style="color: #000000">HOME</a></li>
-                <li class="breadcrumb-item active"><a href="/kakao" style="color: #000000">MAIN</a></li>
-                <li class="breadcrumb-item active"><a href="/his" style="color: #000000">HISTORY</a></li>
-            </ol>
-        </nav>
-        <center>
-            <!-- history content .section -->
-            <section class="section">
-                <div class="container main-container">
-                    <h2 class="title">개인 맞춤형 식단 필터링<br>HISTORY</h2>
-                    <h5 class="subtitle">궁금한 질병 내용이 있으신가요?<br>다양한 내용을 아래에서 확인 하실수있습니다.</h5>
-                </div>
-            </section><br>
-            <!-- history content .section2 -->
-            <section class="section2">
-                <!-- tab container -->
-                <div class="container">
-                    <!-- tab menu -->
-                    <ul class="tabs">
-                        <li class="tab-link current" data-tab="tab-1">1회권장량</li>
-                        <li class="tab-link" data-tab="tab-2">하루권장량</li>
-                    </ul>
-                    <!-- tab context -->
-                    <div id="tab-1" class="tab-content current">
-                        <canvas id="histogram"></canvas>
-                        <p>1회권장량기준으로 얼마를 섭취했는지?? 그래프로 표시</p>
-                    </div>
-                    <div id="tab-2" class="tab-content">
-                        <!-- <canvas id="histogram2"></canvas> -->
-                        하루권장량 기준으로 얼마를 섭취했는지 그래프로 표시
-                    </div>
-                </div>
-            </section>
-        </center>
-        <!-- scripts -->
-        <section class="section3">
-            <!-- tab script -->
-            <script language="javascript" type="text/javascript">
-                $(document).ready(function(){
+    <title>Nutrition_4</title>
+    <link rel="stylesheet" href="../../static/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    
+  </head>
+  <body>
+    <nav class="navbar navbar-ligth" style="background-color: #fcd6f9ec;">
+        <!-- Navbar content -->
+        <ol class="breadcrumb">
+            &nbsp;&nbsp;&nbsp; <img src="../img/1f951.svg" width="25" height="25"/> &nbsp;&nbsp;
+            <li class="breadcrumb-item active" aria-current="page"><a href="/kakao" style="color: #000000">MAIN</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/his" style="color: #000000">HISTORY</a></li>
+        </ol>
+    </nav>
 
-                    $('ul.tabs li').click(function(){
-                        var tab_id = $(this).attr('data-tab');
+    <section class="section">
+            <div class="container main-container">
+                <h2 class="title">개인 맞춤형 식단 필터링</h2>
+                <h5 class="subtitle">성별/나이정보 동기화기반 서비스</h5>
+            </div>
+    </section><br>
+    <!-- 그래프 container -->
+    <div class="container">
+        <ul class="tabs">
+            <li class="tab-link current" data-tab="tab-1">1회권장량</li>
+            <li class="tab-link" data-tab="tab-2">하루권장량</li>
+            <li class="tab-link" data-tab="tab-3">질병별권장량</li>
+            <li class="tab-link" data-tab="tab-4">현재음식명/경고메시지</li>
+        </ul>
+        <div id="tab-1" class="tab-content current" style="position: relative; height:40vh; width:80vw"> 
+            <canvas id="histogram"></canvas>
+        </div>
 
-                        $('ul.tabs li').removeClass('current');
-                        $('.tab-content').removeClass('current');
+        <div id="tab-2" class="tab-content" style="position: relative; height:40vh; width:80vw">
+            <canvas id="histogram2"></canvas>
+        </div>
+        
+        <div id="tab-3" class="tab-content">
+            <p>질병별권장량</p>
+        </div>
 
-                        $(this).addClass('current');
-                        $("#"+tab_id).addClass('current');
-                    })
-                })
-            </script>
-            <!-- graph script -->
-            <script>
-                var ctx = document.getElementById('histogram').getContext('2d');
-                var chart = new Chart(ctx, {
-                    // The type of chart we want to create
+        <div id="tab-4" class="tab-content">
+            <p>섭취한 음식명 : {{ food_names }}
+            경고메시지 : {{ result }} </p>
+        </div>
+
+        </div>
+    </center>
+
+    <script>
+        var ctx = document.getElementById('histogram').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+            // The data for our dataset
+            data: { labels: ['에너지(kcal)', '탄수화물(g)', '당류(g)', '지방(g)', '단백질(g)', '칼슘(mg)',
+                            '인(mg)', '나트륨(mg)', '칼륨(mg)', '마그네슘(mg)', '철(mg)', '아연(mg)'],
+                datasets: [
+                { 
+                    label: '영양소 섭취량(%)',
                     type: 'bar',
-                    // The data for our dataset
-                    data: { labels: ['에너지(kcal)', '탄수화물(g)', '당류(g)', '지방(g)', '단백질(g)', '칼슘(mg)',
-                                    '인(mg)', '나트륨(mg)', '칼륨(mg)', '마그네슘(mg)', '철(mg)', '아연(mg)'],
-                        datasets: [
-                        { 
-                            label: '영양소 섭취량(%)',
-                            type: 'bar',
-                            backgroundColor: [ 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 
-                                            'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
-                            borderColor: ['rgb(255, 99, 132,1.5)', 'rgba(54, 162, 235, 1.5)', 'rgba(255, 206, 86, 1.5)', 'rgba(75, 192, 192, 1.5)', 'rgba(153, 102, 255, 1.5)', 'rgba(255, 159, 64, 1.5)'], 
-                            data: {nutri_list}
-                        },{
-                            label: '일일 권장 섭취량 기준선',
-                            type : 'line',         // 'line' type
-                            fill : false,         // 채우기 없음
-                            lineTension : 0.2,  // 0이면 꺾은선 그래프, 숫자가 높을수록 둥글해짐
-                            pointRadius : 0,    // 각 지점에 포인트 주지 않음
-                            backgroundColor: 'rgb(255, 153, 0)',
-                            borderColor: 'rgb(255, 153, 0)',
-                            data: [100,100,100,100,100,100,100,100,100,100,100,100]
-                        }]
-                        }, 
-                    // Configuration options go here
-                    options: {
-                        title: { 
-                            display: true, 
-                            text: '일일 영양소 섭취량', 
-                            fontSize: 30, 
-                            fontColor: 'rgba(107, 102, 255, 1)' 
-                        },
-                        legend: {
-                            labels: {
-                                fontColor: 'rgba(83, 51, 237, 1)',
-                                fontSize: 15 } 
-                            },
-                        scales: {
-                            xAxes: [{
-                                ticks: {
-                                    fontColor: 'rgba(27, 163, 156, 1)',
-                                    fontSize: '15' 
-                                }
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    fontColor: 'rgba(246, 36, 89, 1)',
-                                    fontSize: '15' 
-                                } 
-                            }] 
+                    backgroundColor: [ 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 
+                                    'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
+                    borderColor: ['rgb(255, 99, 132,1.5)', 'rgba(54, 162, 235, 1.5)', 'rgba(255, 206, 86, 1.5)', 'rgba(75, 192, 192, 1.5)', 'rgba(153, 102, 255, 1.5)', 'rgba(255, 159, 64, 1.5)'], 
+                    data: {{nutri_list}}
+                },{
+                    label: '일일 권장 섭취량 기준선',
+                    type : 'line',         // 'line' type
+                    fill : false,         // 채우기 없음
+                    lineTension : 0.2,  // 0이면 꺾은선 그래프, 숫자가 높을수록 둥글해짐
+                    pointRadius : 0,    // 각 지점에 포인트 주지 않음
+                    backgroundColor: 'rgb(255, 153, 0)',
+                    borderColor: 'rgb(255, 153, 0)',
+                    data: [100,100,100,100,100,100,100,100,100,100,100,100]
+                }]
+                }, 
+            // Configuration options go here
+            options: {
+                title: { 
+                    display: true, 
+                    text: '일일 영양소 섭취량', 
+                    fontSize: 30, 
+                    fontColor: 'rgba(107, 102, 255, 1)' 
+                },
+                legend: {
+                    labels: {
+                        fontColor: 'rgba(83, 51, 237, 1)',
+                        fontSize: 15 } 
+                    },
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontColor: 'rgba(27, 163, 156, 1)',
+                            fontSize: '15' 
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor: 'rgba(246, 36, 89, 1)',
+                            fontSize: '15' 
                         } 
-                    } 
-                });
-            </script>
-        </section>
+                    }] 
+                } 
+            } 
+        });
+    </script>
+    <script>
+        var ctx2 = document.getElementById('histogram2').getContext('2d');
+        var chart = new Chart(ctx2, {
+            // The type of chart we want to create
+            type: 'horizontalBar',
+            // The data for our dataset
+            data: { labels: ['비만'],
+                datasets: [
+                { 
+                    label: '영양소 섭취량(%)',
+                    backgroundColor: [ 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 
+                                    'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
+                    borderColor: ['rgb(255, 99, 132,1.5)', 'rgba(54, 162, 235, 1.5)', 'rgba(255, 206, 86, 1.5)', 'rgba(75, 192, 192, 1.5)', 'rgba(153, 102, 255, 1.5)', 'rgba(255, 159, 64, 1.5)'], 
+                    data: {{nutri_list}}
+                }]
+                }, 
+            // Configuration options go here
+            options: {
+                title: { 
+                    display: true, 
+                    text: '질병 별 중요 영양소 섭취량', 
+                    fontSize: 30, 
+                    fontColor: 'rgba(107, 102, 255, 1)' 
+                },
+                legend: {
+                    labels: {
+                        fontColor: 'rgba(83, 51, 237, 1)',
+                        fontSize: 15 } 
+                    },
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontColor: 'rgba(27, 163, 156, 1)',
+                            fontSize: '15' 
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor: 'rgba(246, 36, 89, 1)',
+                            fontSize: '15' 
+                        } 
+                    }] 
+                } 
+            } 
+        });
+    </script>
+    <!-- 그래프 container 스크립트 -->
+    <script defer language="javascript" type="text/javascript">
+        $(document).ready(function(){
+
+        $('ul.tabs li').click(function(){
+            var tab_id = $(this).attr('data-tab');
+
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $("#"+tab_id).addClass('current');
+        })
+        })
+    </script>
     </body>
 </html>

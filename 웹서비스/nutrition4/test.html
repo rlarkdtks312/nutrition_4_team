@@ -1,0 +1,28 @@
+data: {
+    labels: ['1월','2월','3월','4월','5월','6월'],
+    datasets: [{
+        label: '바 그래프',
+        type : 'bar', // 'bar' type, 전체 타입과 같다면 생략가능
+        backgroundColor: 'rgb(255, 204, 102)',
+        borderColor: 'rgb(255, 204, 102)',
+        data: [10, 20, 30, 40, 50, 60]
+    }, {
+        label: '라인 그래프1',
+        type : 'line',         // 'line' type
+        fill : false,         // 채우기 없음
+        lineTension : 0.2,  // 0이면 꺾은선 그래프, 숫자가 높을수록 둥글해짐
+        pointRadius : 0,    // 각 지점에 포인트 주지 않음
+        backgroundColor: 'rgb(255, 153, 0)',
+        borderColor: 'rgb(255, 153, 0)',
+        data: [40, 50, 60, 70, 80, 90]
+    }, {
+        label: '라인 그래프2',
+        type : 'line',
+        fill : false,
+        lineTension : 0.2,
+        pointRadius : 0,
+        backgroundColor: 'rgb(255, 204, 0)',
+        borderColor: 'rgb(255, 204, 0)',
+        data: [100, 120, 150, 100, 180, 200]
+    }]
+},

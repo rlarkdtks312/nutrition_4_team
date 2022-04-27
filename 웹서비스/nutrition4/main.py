@@ -117,8 +117,6 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : st
     dise_datas = list(dise_nutri['섭취기준\n(1일)'])
 
     message = '소금 그만!!'
-    print(type(request), type(food_list), type(email), type(gender), type(age_range), type(disease), type(pred_fild_path), type(nutri_list[:-2]), type(nutri_list[:-2]), type(dise_labels), type(dise_datas), type(message))
-
     return templates.TemplateResponse("print.html", {"request": request, 'food_names': food_list, 
                                                      'email':email, 'gender':gender, 'age_range':age_range, 
                                                      'disease':disease, 'img_path':pred_fild_path, 'nutri_list':nutri_list[:-2], 
@@ -126,62 +124,45 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : st
                                                      'message':message
                                                      }
                                       )
-
-@app.get('/his', response_class=HTMLResponse)
-async def get_history(request: Request):
-    # ## 업로드한 {img_s.filename}으로 image폴더에 파일 저장하기
-    # file_location = f"./image/{img_s.filename}"
-    # with open(file_location, "wb+") as file_object:
-    #     file_object.write(img_s.file.read())
     
-    # ## 로그인 정보 가져오기
-    # with open('data/data.json', "r") as json_file:
-    #   json_data = json.load(json_file)
-      
-    # email = json_data['email']
-    # if json_data['gender'] == 'male':
-    #   gender = '남자'
-    # else:
-    #   gender = '여자'
-    # age_range = json_data['age_range']
-
-    # ## 업로드한 이미지 파일 예측 수행 및 음식 리스트 생성
-    # my_func.pred(file_location)
-
-    # pred_file = file_location.split('/')[-1]
-    # pred_fild_path = "../pred_image/result/"+pred_file
-    # food_list = my_func.get_result()
+# @app.post('/his', response_class=HTMLResponse)
+# async def get_history(request: Request, disease : str= Form(...)):
+#   with open('data/data.json', "r") as json_file:
+#     json_data = json.load(json_file)
     
-    # ## 예측된 음식의 영양성분 가져와서 id_record db에 넣기
-    # # 현재 시간 가져오기
-    # now = datetime.datetime.now()
-    # cur_time = str(now.year) + '-' + str(now.month) + '-' + str(now.day)
-    
-    # nutri_add2 = my_func.nutri_add(food_list)
-    # record_list = [email, cur_time, gender, age_range]
-    
-    # for nutri in nutri_add2.values():
-    #       record_list.append(nutri)
+#     email = json_data['email']
+#     if json_data['gender'] == 'male':
+#       gender = '남자'
+#     else:
+#       gender = '여자'
+#     age_range = json_data['age_range']
   
-    # my_func.add_record([record_list])
+#   ## histoty histogram
+#     nutri_reco = my_func.nutri_reco()
+#     condition = ((nutri_reco['성별'] == gender) & (nutri_reco['연령'] == age_range))
+#     nutri_reco_id = nutri_reco[condition]['권장(g/일)']
+#     nutri_reco_id = list(nutri_reco_id)
+#     history = my_func.id_history([email])
+#     nutri_list = list(history.groupby('id').sum().iloc[0])
+#     energe = my_func.nutri_limit(['비만', gender, age_range])
     
-    # ## histoty histogram
-    # nutri_reco = my_func.nutri_reco()
-    # condition = ((nutri_reco['성별'] == gender) & (nutri_reco['연령'] == age_range))
-    # nutri_reco_id = nutri_reco[condition]['권장(g/일)']
-    # nutri_reco_id = list(nutri_reco_id)
-    # history = my_func.id_history([email])
-    # nutri_list = list(history.groupby('id').sum().iloc[0])
-    # energe = my_func.nutri_limit(['비만', gender, age_range])
+#     for i in range(len(nutri_reco_id)):
+#           if i == 0:
+#             nutri_list[i] = round((nutri_list[i] / list(energe['섭취기준\n(1일)'])[0])*100, 2)  
+#           else:
+#             nutri_list[i+1] = round((nutri_list[i+1] / nutri_reco_id[i])*100, 2)
+#     dise_nutri = my_func.nutri_limit([disease, gender, age_range])
+#     dise_labels = list(dise_nutri['영양성분'])
+#     dise_datas = list(dise_nutri['섭취기준\n(1일)'])
+#     temp1 = []
+#     temp2 = []
+#     for i in dise_labels:
+#           temp1.append(i)
+#     for i in dise_datas:
+#           temp2.append(i)
     
-    # for i in range(len(nutri_reco_id)):
-    #       if i == 0:
-    #         nutri_list[i] = round((nutri_list[i] / list(energe['섭취기준\n(1일)'])[0])*100, 2)  
-    #       else:
-    #         nutri_list[i+1] = round((nutri_list[i+1] / nutri_reco_id[i])*100, 2)
-    # dise_nutri = my_func.nutri_limit([disease, gender, age_range])
-    # dise_labels = list(dise_nutri['영양성분'])
-    # dise_datas = list(dise_nutri['섭취기준\n(1일)'])
-
-    # message = '소금 그만!!'
-  return templates.TemplateResponse("history.html", {"request": request})
+#     message = '소금 조심!'
+    
+#   return templates.TemplateResponse("history.html", {"request": request, 'nutri_list':nutri_list[:-2], 
+#                                                      'nutri_list2':nutri_list[:-2], 'dise_labels':dise_labels[0], 'dise_datas':dise_datas[0],
+#                                                      'temp1':temp1, 'temp2':temp2, 'message':message})

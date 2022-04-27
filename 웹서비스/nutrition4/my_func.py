@@ -13,10 +13,10 @@ import yaml
 
 
 def pred(img_path):
-    result_file_path = 'C:/Users/rkdtk/nutrition4/pred_image/result'
+    result_file_path = './pred_image/result'
     if os.path.exists(result_file_path):
         shutil.rmtree(result_file_path)
-    os.system(f'python ./yolov5/detect.py --weights C:/Users/rkdtk/nutrition4/yolov5/model/last.pt --img 640 --conf 0.1 --source "{img_path}" --save-txt --name result --project ./pred_image')
+    os.system(f'python ./yolov5/detect.py --weights ./yolov5/model/last.pt --img 640 --conf 0.1 --source "{img_path}" --save-txt --name result --project ./pred_image ')
     global image_name
     image_name = img_path.split('/')[-1]
 
@@ -35,8 +35,8 @@ def nutrition_info(food_list):
     food_info = {}
     # 음식명별 영양성분 정보
     Nutrition = {'중량': ['중량(g)'],
-             '성분': ['에너지(kcal)', '콜레스테롤(mg)', '트랜스지방(g)', '탄수화물(g)', '당류(g)', '지방(g)',
-                    '단백질(g)', '칼슘(mg)', '인(mg)', '나트륨(mg)', '칼륨(mg)', '마그네슘(mg)', '철(mg)', '아연(mg)']}
+             '성분': ['에너지(kcal)', '탄수화물(g)', '당류(g)', '지방(g)', '단백질(g)', '칼슘(mg)', '인(mg)', 
+                    '나트륨(mg)', '칼륨(mg)', '마그네슘(mg)', '철(mg)', '아연(mg)', '콜레스테롤(mg)', '트랜스지방(g)']}
     # 예측된 음식명들중에 하나씩 반복해서 이름은 음식명에 담고, 영양정보는 영양성분에 담기
     for name in food_list:
         if name in food_nutri.index:
@@ -62,11 +62,11 @@ def nutri_add(food_list):
     # 음식명별 영양성분 정보
     nut_info = nutrition_info(food_list)
     Nutrition = {'중량': ['중량(g)'],
-             '성분': ['에너지(kcal)', '콜레스테롤(mg)', '트랜스지방(g)', '탄수화물(g)', '당류(g)', '지방(g)',
-                    '단백질(g)', '칼슘(mg)', '인(mg)', '나트륨(mg)', '칼륨(mg)', '마그네슘(mg)', '철(mg)', '아연(mg)']}
+             '성분': ['에너지(kcal)', '탄수화물(g)', '당류(g)', '지방(g)', '단백질(g)', '칼슘(mg)', '인(mg)', 
+                    '나트륨(mg)', '칼륨(mg)', '마그네슘(mg)', '철(mg)', '아연(mg)', '콜레스테롤(mg)', '트랜스지방(g)']}
     # 전체음식의 영양성분을 한번에 담을 변수 생성 Nutri
-    Nutri = {'에너지(kcal)': 0, '콜레스테롤(mg)': 0, '트랜스지방(g)': 0, '탄수화물(g)': 0, '당류(g)': 0, '지방(g)': 0,
-    '단백질(g)': 0, '칼슘(mg)': 0, '인(mg)': 0, '나트륨(mg)': 0, '칼륨(mg)': 0, '마그네슘(mg)': 0, '철(mg)': 0, '아연(mg)': 0}
+    Nutri = {'에너지(kcal)': 0, '탄수화물(g)': 0, '당류(g)': 0, '지방(g)': 0, '단백질(g)': 0, '칼슘(mg)': 0, '인(mg)': 0,
+             '나트륨(mg)': 0, '칼륨(mg)': 0, '마그네슘(mg)': 0, '철(mg)': 0, '아연(mg)': 0, '콜레스테롤(mg)': 0, '트랜스지방(g)': 0}
     # 추출된 전체 음식의 성분별로 영양성분 더하여 dict에 저장
     for name in nut_info[0]:
         for k in Nutrition['성분']:
@@ -82,6 +82,7 @@ def calc_nutri(gender, age_range, food_list):
     
     df = nutri_reco[(nutri_reco['성별'] == gender) & (nutri_reco['연령']== age_range)]
     result = nutri_add(food_list)
+    print('df',df)
     for aug in df['영양성분']:
         if int(result[aug]) >= int(df[df['영양성분']==aug]['권장(g/회)']):
             c = int(result[aug])
@@ -93,7 +94,7 @@ def calc_nutri(gender, age_range, food_list):
     return
 
 def id_history(id) : 
-    conn = sqlite3.connect('./db/id_record1.db')
+    conn = sqlite3.connect('./db/id_record.db')
 
     with conn:
         cur = conn.cursor()
@@ -119,11 +120,11 @@ def nutri_limit(data) :
 
 # 1회분 섭취정보 db저장
 def add_record(data):
-    conn = sqlite3.connect('./db/id_record1.db')
+    conn = sqlite3.connect('./db/id_record.db')
     
     with conn:
         cur = conn.cursor()
-        sql = "insert into id_record values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+        sql = "insert into id_record values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         cur.executemany(sql, data)
         
         conn.commit()
