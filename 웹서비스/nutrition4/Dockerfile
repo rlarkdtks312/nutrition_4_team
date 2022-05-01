@@ -5,7 +5,7 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
 WORKDIR ./
 
 # 현제 디렉터리에 있는 파일들을 이미지 내부 /app 디렉터리에 추가
-ADD ./nutrition4 ./
+ADD ./ ./
 
 # Install the dependencies
 RUN python -m pip install --upgrade pip

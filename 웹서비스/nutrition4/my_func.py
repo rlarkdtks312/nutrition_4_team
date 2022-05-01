@@ -16,7 +16,7 @@ def pred(img_path):
     result_file_path = './pred_image/result'
     if os.path.exists(result_file_path):
         shutil.rmtree(result_file_path)
-    os.system(f'python ./yolov5/detect.py --weights ./yolov5/model/last.pt --img 640 --conf 0.1 --source "{img_path}" --save-txt --name result --project ./pred_image ')
+    os.system(f'python ./yolov5/detect.py --weights ./yolov5/model/last.pt --img 640 --conf 0.3 --source "{img_path}" --save-txt --name result --project ./pred_image ')
     global image_name
     image_name = img_path.split('/')[-1]
 
@@ -82,16 +82,17 @@ def calc_nutri(gender, age_range, food_list):
     
     df = nutri_reco[(nutri_reco['성별'] == gender) & (nutri_reco['연령']== age_range)]
     result = nutri_add(food_list)
-    print('df',df)
+    temp = []
     for aug in df['영양성분']:
         if int(result[aug]) >= int(df[df['영양성분']==aug]['권장(g/회)']):
             c = int(result[aug])
             f = int(df[df['영양성분']==aug]['권장(g/회)'])
             g = aug.split('(')[1].split(')')[0]
-            print(aug,'섭취량', round(c-f),g ,'초과!! 경고혀~')
+            s = '[경고!]: '+ aug + ' 섭취량 ' + str(round(c-f)) + g + '초과!!'
         else:
-            print(aug,'은(는) 아직 안전혀~')
-    return
+            continue
+        temp.append(s)
+    return temp
 
 def id_history(id) : 
     conn = sqlite3.connect('./db/id_record.db')
