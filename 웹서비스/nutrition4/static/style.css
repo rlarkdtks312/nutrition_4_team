@@ -4,6 +4,11 @@ a {
   color: inherit;
 }
 
+ul,
+li {
+  list-style: none;
+}
+
 body {
   font-family: "Gowun Dodum";
   background-repeat: no-repeat;
@@ -50,7 +55,6 @@ body {
 ul.tabs {
   margin: 0px;
   padding: 0px;
-  list-style: none;
 }
 ul.tabs li {
   background: none;
@@ -277,7 +281,7 @@ summary {
 }
 
 #layer_bg {
-  display: none;
+  display: block;
   position: absolute;
   top: 0;
   left: 0;
@@ -309,5 +313,5 @@ summary {
 }
 
 #layerPopup:checked + label + #layer_bg {
-  display: block;
+  display: none;
 }
