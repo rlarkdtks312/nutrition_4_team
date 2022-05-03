@@ -47,9 +47,7 @@
           <a href="/kakao">음식 사진 다시 올리기</a>
         </li>
         <li class="breadcrumb-item">
-          <a href="/his"
-            >지금까지 내 음식 섭취 역사 보기</a
-          >
+          <a href="/his">지금까지 내 음식 섭취 역사 보기</a>
         </li>
       </ol>
     </nav>
@@ -66,14 +64,14 @@
       <!-- predict image output -->
       <section class="section2">
         <div class="container file-upload">
-          <img
+          <!-- <img
             class="fit-picture"
             src="{{"
             img_path
             }}
             width="50%"
             alt="예측레이블이미지"
-          />
+          /> -->
         </div>
         <!-- info tab -->
         <!-- tab container -->
@@ -108,33 +106,18 @@
 
         <!-- popup -->
         <div>
-            <input type="checkbox" id="layerPopup">
-            <label for="layerPopup">
-                뿡뿡이
-            </label>
-            <div id="layer_bg">
-                <div id="popup">
-                    <h3>
-                        큰 제목
-                        <label for="layerPopup">X</label>
-                      </h3>
-                      넣을 내용
-                  </div>
+          <input type="checkbox" id="layerPopup" />
+          <label for="layerPopup"> 뿡뿡이 </label>
+          <div id="layer_bg">
+            <div id="popup">
+              <h3>
+                큰 제목
+                <label for="layerPopup">X</label>
+              </h3>
+              넣을 내용
             </div>
+          </div>
         </div>
-
-        <script>
-            const tabContent = document.querySelectorAll(".tab-content");
-            const tabContentArray = Array.from(tabContent);
-            
-            function handleTabContent(popUPText) {
-                alert(popUPText);
-            }
-
-            tabContentArray.forEach((content) => {
-                content.addEventListener("click", function () {handleTabContent(content.innerText)});
-            });
-        </script>
 
         <button type="button" class="btn btn-secondary">
           <a href="/kakao" style="color: #ffffff">음식 사진 다시 올리기</a>
@@ -149,14 +132,13 @@
       </section>
     </center>
 
-    <script>
+    <!-- <script>
       const result_02 = spawn("python", ["function_args.py", "카레유", "20"]);
       result_02.stdout.on("data", (result) => {
         console.log(result.toString());
       });
-    </>
+    </script> -->
     <section class="section3">
-      <!-- tab script -->
       <script language="javascript" type="text/javascript">
         $(document).ready(function () {
           $("ul.tabs li").click(function () {
@@ -173,125 +155,201 @@
     </section>
     <!-- scripts -->
     <script type="text/javascript">
-      var ctx = document.getElementById('histogram');
+      const nutri_list = "IMPORT_DATA";
+      var ctx = document.getElementById("histogram");
       Chart.pluginService.register({
-          afterDraw: function(chart) {
-              if (typeof chart.config.options.lineAt != 'undefined') {
-                 var lineAt = chart.config.options.lineAt;
-                  var ctxPlugin = chart.chart.ctx;
-                  var xAxe = chart.scales[chart.config.options.scales.xAxes[0].id];
-                  var yAxe = chart.scales[chart.config.options.scales.yAxes[0].id];
-                  // I'm not good at maths
-                  // So I couldn't find a way to make it work ...
-                  // ... without having the `min` property set to 0
-                  if(yAxe.min != 0) return;
-                  ctxPlugin.strokeStyle = "red";
-                  ctxPlugin.beginPath();
-                  lineAt = (lineAt - yAxe.min) * (100 / yAxe.max);
-                  lineAt = (100 - lineAt) / 100 * (yAxe.height) + yAxe.top;
-                  ctxPlugin.moveTo(xAxe.left, lineAt);
-                  ctxPlugin.lineTo(xAxe.right, lineAt);
-                  ctxPlugin.stroke();
-              }
+        afterDraw: function (chart) {
+          if (typeof chart.config.options.lineAt != "undefined") {
+            var lineAt = chart.config.options.lineAt;
+            var ctxPlugin = chart.chart.ctx;
+            var xAxe = chart.scales[chart.config.options.scales.xAxes[0].id];
+            var yAxe = chart.scales[chart.config.options.scales.yAxes[0].id];
+            // I'm not good at maths
+            // So I couldn't find a way to make it work ...
+            // ... without having the `min` property set to 0
+            if (yAxe.min != 0) return;
+            ctxPlugin.strokeStyle = "red";
+            ctxPlugin.beginPath();
+            lineAt = (lineAt - yAxe.min) * (100 / yAxe.max);
+            lineAt = ((100 - lineAt) / 100) * yAxe.height + yAxe.top;
+            ctxPlugin.moveTo(xAxe.left, lineAt);
+            ctxPlugin.lineTo(xAxe.right, lineAt);
+            ctxPlugin.stroke();
           }
+        },
       });
       var chart = new Chart(ctx, {
-          // The type of chart we want to create
-          type: 'bar',
-          // The data for our dataset
-          data: { labels: ['에너지', '탄수화물', '당류', '지방', '단백질', '칼슘',
-                          '인', '나트륨', '칼륨', '마그네슘', '철', '아연'],
-              datasets: [
-              {
-                  label: '영양소 섭취량(%)',
-                  backgroundColor: [ 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)',
-                                  'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
-                  borderColor: ['rgb(255, 99, 132,1.5)', 'rgba(54, 162, 235, 1.5)', 'rgba(255, 206, 86, 1.5)', 'rgba(75, 192, 192, 1.5)', 'rgba(153, 102, 255, 1.5)', 'rgba(255, 159, 64, 1.5)'],
-                  data: {{nutri_list}}
-              }
-            ]
+        // The type of chart we want to create
+        type: "bar",
+        // The data for our dataset
+        data: {
+          labels: [
+            "에너지",
+            "탄수화물",
+            "당류",
+            "지방",
+            "단백질",
+            "칼슘",
+            "인",
+            "나트륨",
+            "칼륨",
+            "마그네슘",
+            "철",
+            "아연",
+          ],
+          datasets: [
+            {
+              label: "영양소 섭취량(%)",
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.5)",
+                "rgba(54, 162, 235, 0.5)",
+                "rgba(255, 206, 86, 0.5)",
+                "rgba(75, 192, 192, 0.5)",
+                "rgba(153, 102, 255, 0.5)",
+                "rgba(255, 159, 64, 0.5)",
+                "rgba(255, 99, 132, 0.5)",
+                "rgba(54, 162, 235, 0.5)",
+                "rgba(255, 206, 86, 0.5)",
+                "rgba(75, 192, 192, 0.5)",
+                "rgba(153, 102, 255, 0.5)",
+                "rgba(255, 159, 64, 0.5)",
+              ],
+              borderColor: [
+                "rgb(255, 99, 132,1.5)",
+                "rgba(54, 162, 235, 1.5)",
+                "rgba(255, 206, 86, 1.5)",
+                "rgba(75, 192, 192, 1.5)",
+                "rgba(153, 102, 255, 1.5)",
+                "rgba(255, 159, 64, 1.5)",
+              ],
+              data: { nutri_list },
+            },
+          ],
+        },
+        // Configuration options go here
+        options: {
+          lineAt: 100,
+          responsive: true,
+          title: {
+            display: true,
+            text: "한끼 영양소 섭취량",
+            fontSize: 30,
+            fontColor: "rgba(107, 102, 255, 1)",
           },
-          // Configuration options go here
-          options: {
-              lineAt: 100,
-              responsive: true,
-              title: {
-                  display: true,
-                  text: '한끼 영양소 섭취량',
-                  fontSize: 30,
-                  fontColor: 'rgba(107, 102, 255, 1)'
+          legend: {
+            labels: {
+              fontColor: "rgba(83, 51, 237, 1)",
+              fontSize: 15,
+            },
+          },
+          scales: {
+            xAxes: [
+              {
+                ticks: {
+                  fontColor: "rgba(27, 163, 156, 1)",
+                  fontSize: 15,
+                },
               },
-              legend: {
-                  labels: {
-                      fontColor: 'rgba(83, 51, 237, 1)',
-                      fontSize: 15 }
-                  },
-              scales: {
-                  xAxes: [{
-                      ticks: {
-                          fontColor: 'rgba(27, 163, 156, 1)',
-                          fontSize: 15
-                      }
-                  }],
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true,
-                          fontColor: 'rgba(246, 36, 89, 1)',
-                          fontSize: 15
-                      }
-                  }]
-              }
-          }
+            ],
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                  fontColor: "rgba(246, 36, 89, 1)",
+                  fontSize: 15,
+                },
+              },
+            ],
+          },
+        },
       });
     </script>
     <script type="text/javascript">
-      var ctx2 = document.getElementById('histogram2');
+      var ctx2 = document.getElementById("histogram2");
       var chart2 = new Chart(ctx2, {
-          // The type of chart we want to create
-          type: 'bar',
-          // The data for our dataset
-          data: { labels: ['에너지(kcal)', '탄수화물(g)', '당류(g)', '지방(g)', '단백질(g)', '칼슘(mg)',
-                          '인(mg)', '나트륨(mg)', '칼륨(mg)', '마그네슘(mg)', '철(mg)', '아연(mg)'],
-              datasets: [
-              {
-                  label: '영양소 섭취량(%)',
-                  backgroundColor: [ 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)',
-                                  'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
-                  borderColor: ['rgb(255, 99, 132,1.5)', 'rgba(54, 162, 235, 1.5)', 'rgba(255, 206, 86, 1.5)', 'rgba(75, 192, 192, 1.5)', 'rgba(153, 102, 255, 1.5)', 'rgba(255, 159, 64, 1.5)'],
-                  data: {{nutri_list}}
-              }]
+        // The type of chart we want to create
+        type: "bar",
+        // The data for our dataset
+        data: {
+          labels: [
+            "에너지(kcal)",
+            "탄수화물(g)",
+            "당류(g)",
+            "지방(g)",
+            "단백질(g)",
+            "칼슘(mg)",
+            "인(mg)",
+            "나트륨(mg)",
+            "칼륨(mg)",
+            "마그네슘(mg)",
+            "철(mg)",
+            "아연(mg)",
+          ],
+          datasets: [
+            {
+              label: "영양소 섭취량(%)",
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.5)",
+                "rgba(54, 162, 235, 0.5)",
+                "rgba(255, 206, 86, 0.5)",
+                "rgba(75, 192, 192, 0.5)",
+                "rgba(153, 102, 255, 0.5)",
+                "rgba(255, 159, 64, 0.5)",
+                "rgba(255, 99, 132, 0.5)",
+                "rgba(54, 162, 235, 0.5)",
+                "rgba(255, 206, 86, 0.5)",
+                "rgba(75, 192, 192, 0.5)",
+                "rgba(153, 102, 255, 0.5)",
+                "rgba(255, 159, 64, 0.5)",
+              ],
+              borderColor: [
+                "rgb(255, 99, 132,1.5)",
+                "rgba(54, 162, 235, 1.5)",
+                "rgba(255, 206, 86, 1.5)",
+                "rgba(75, 192, 192, 1.5)",
+                "rgba(153, 102, 255, 1.5)",
+                "rgba(255, 159, 64, 1.5)",
+              ],
+              data: { nutri_list },
+            },
+          ],
+        },
+        // Configuration options go here
+        options: {
+          lineAt: 100,
+          responsive: true,
+          title: {
+            display: true,
+            text: "일일 영양소 섭취량",
+            fontSize: 30,
+            fontColor: "rgba(107, 102, 255, 1)",
           },
-          // Configuration options go here
-          options: {
-              lineAt: 100,
-              responsive: true,
-              title: {
-                  display: true,
-                  text: '일일 영양소 섭취량',
-                  fontSize: 30,
-                  fontColor: 'rgba(107, 102, 255, 1)'
+          legend: {
+            labels: {
+              fontColor: "rgba(83, 51, 237, 1)",
+              fontSize: 15,
+            },
+          },
+          scales: {
+            xAxes: [
+              {
+                ticks: {
+                  fontColor: "rgba(27, 163, 156, 1)",
+                  fontSize: 15,
+                },
               },
-              legend: {
-                  labels: {
-                      fontColor: 'rgba(83, 51, 237, 1)',
-                      fontSize: 15 }
-                  },
-              scales: {
-                  xAxes: [{
-                      ticks: {
-                          fontColor: 'rgba(27, 163, 156, 1)',
-                          fontSize: 15
-                      }
-                  }],
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true,
-                          fontColor: 'rgba(246, 36, 89, 1)',
-                          fontSize: 15
-                      }
-                  }]
-              }
-          }
+            ],
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                  fontColor: "rgba(246, 36, 89, 1)",
+                  fontSize: 15,
+                },
+              },
+            ],
+          },
+        },
       });
     </script>
   </body>
