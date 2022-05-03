@@ -16,7 +16,7 @@
     <!-- 타이틀 -->
         <title>Nutrition_4</title>
     <!-- CSS 참조 -->
-        <link rel="stylesheet" href="../../static/style.css" />
+        <link rel="stylesheet" href="../static/style.css" />
         <!-- 폰트 -->
             <link
                 href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
@@ -64,8 +64,21 @@
                         <p>기준선: 100%</p>
                     </div>
                     <div id="tab-2" class="tab-content">
-                        <canvas id="histogram2">
-                        하루권장량 기준으로 얼마를 섭취했는지 그래프로 표시
+                        <div>
+                            <canvas id="histogram2">
+                        </div>
+                        <div>
+                            <canvas id="histogram3">
+                        </div>
+                        <div>
+                            <canvas id="histogram4">
+                        </div>
+                        <div>
+                            <canvas id="histogram5">
+                        </div>
+                        <div>
+                            <canvas id="histogram6">
+                        </div>
                     </div>
                 </div>
             </section>
@@ -85,7 +98,7 @@
         </script>
         <!-- graph script -->
         <script type='text/javascript'>
-            var ctx = document.getElementById('histogram');
+            let ctx = document.getElementById('histogram');
             Chart.pluginService.register({
                 afterDraw: function(chart) {
                     if (typeof chart.config.options.lineAt != 'undefined') {
@@ -104,7 +117,7 @@
                     }
                 }
             });
-            var chart = new Chart(ctx, {
+            const chart = new Chart(ctx, {
                 // The type of chart we want to create
                 type: 'bar',
                 // The data for our dataset
@@ -153,12 +166,12 @@
             });
         </script>
         <script>
-            var ctx2 = document.getElementById('histogram2');
-            var chart2 = new Chart(ctx2, {
+            const ctx2 = document.getElementById('histogram2');
+            const chart2 = new Chart(ctx2, {
                 // The type of chart we want to create
                 type: 'bar',
                 // The data for our dataset
-                data: { labels: {{ nutri_name | safe }},
+                data: { labels: {{ nutri_name_list[0] | safe }},
                     datasets: [
                     { 
                         label: '영양소 섭취량(%)',
@@ -166,7 +179,7 @@
                         backgroundColor: [ 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 
                                         'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
                         borderColor: ['rgb(255, 99, 132,1.5)', 'rgba(54, 162, 235, 1.5)', 'rgba(255, 206, 86, 1.5)', 'rgba(75, 192, 192, 1.5)', 'rgba(153, 102, 255, 1.5)', 'rgba(255, 159, 64, 1.5)'], 
-                        data: {{having  | safe }}
+                        data: {{having_list[0]  | safe }}
                     }]
                     }, 
                 // Configuration options go here
@@ -174,7 +187,203 @@
                     lineAt: 100,
                     title: { 
                         display: true, 
-                        text: '일일 질병별 주의할 성분', 
+                        text: '{{disease_list[0]}}',
+                        fontSize: 30, 
+                        fontColor: 'rgba(107, 102, 255, 1)' 
+                    },
+                    legend: {
+                        labels: {
+                            fontColor: 'rgba(83, 51, 237, 1)',
+                            fontSize: 15 } 
+                        },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontColor: 'rgba(27, 163, 156, 1)',
+                                fontSize: 15 
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: 'rgba(246, 36, 89, 1)',
+                                fontSize: 15
+                            } 
+                        }] 
+                    } 
+                } 
+            });
+        </script>
+        <script>
+            const ctx3 = document.getElementById('histogram3');
+            const chart3 = new Chart(ctx3, {
+                // The type of chart we want to create
+                type: 'bar',
+                // The data for our dataset
+                data: { labels: {{ nutri_name_list[1] | safe }},
+                    datasets: [
+                    { 
+                        label: '영양소 섭취량(%)',
+                        type: 'bar',
+                        backgroundColor: [ 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 
+                                        'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
+                        borderColor: ['rgb(255, 99, 132,1.5)', 'rgba(54, 162, 235, 1.5)', 'rgba(255, 206, 86, 1.5)', 'rgba(75, 192, 192, 1.5)', 'rgba(153, 102, 255, 1.5)', 'rgba(255, 159, 64, 1.5)'], 
+                        data: {{having_list[1]  | safe }}
+                    }]
+                    }, 
+                // Configuration options go here
+                options: {
+                    lineAt: 100,
+                    title: { 
+                        display: true, 
+                        text: '{{disease_list[1]}}', 
+                        fontSize: 30, 
+                        fontColor: 'rgba(107, 102, 255, 1)' 
+                    },
+                    legend: {
+                        labels: {
+                            fontColor: 'rgba(83, 51, 237, 1)',
+                            fontSize: 15 } 
+                        },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontColor: 'rgba(27, 163, 156, 1)',
+                                fontSize: 15 
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: 'rgba(246, 36, 89, 1)',
+                                fontSize: 15
+                            } 
+                        }] 
+                    } 
+                } 
+            });
+        </script>
+        <script>
+            const ctx4 = document.getElementById('histogram4');
+            const chart4 = new Chart(ctx4, {
+                // The type of chart we want to create
+                type: 'bar',
+                // The data for our dataset
+                data: { labels: {{ nutri_name_list[2] | safe }},
+                    datasets: [
+                    { 
+                        label: '영양소 섭취량(%)',
+                        type: 'bar',
+                        backgroundColor: [ 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 
+                                        'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
+                        borderColor: ['rgb(255, 99, 132,1.5)', 'rgba(54, 162, 235, 1.5)', 'rgba(255, 206, 86, 1.5)', 'rgba(75, 192, 192, 1.5)', 'rgba(153, 102, 255, 1.5)', 'rgba(255, 159, 64, 1.5)'], 
+                        data: {{having_list[2]  | safe }}
+                    }]
+                    }, 
+                // Configuration options go here
+                options: {
+                    lineAt: 100,
+                    title: { 
+                        display: true, 
+                        text: '{{disease_list[2]}}', 
+                        fontSize: 30, 
+                        fontColor: 'rgba(107, 102, 255, 1)' 
+                    },
+                    legend: {
+                        labels: {
+                            fontColor: 'rgba(83, 51, 237, 1)',
+                            fontSize: 15 } 
+                        },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontColor: 'rgba(27, 163, 156, 1)',
+                                fontSize: 15 
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: 'rgba(246, 36, 89, 1)',
+                                fontSize: 15
+                            } 
+                        }] 
+                    } 
+                } 
+            });
+        </script>
+        <script>
+            const ctx5 = document.getElementById('histogram5');
+            const chart5 = new Chart(ctx5, {
+                // The type of chart we want to create
+                type: 'bar',
+                // The data for our dataset
+                data: { labels: {{ nutri_name_list[3] | safe }},
+                    datasets: [
+                    { 
+                        label: '영양소 섭취량(%)',
+                        type: 'bar',
+                        backgroundColor: [ 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 
+                                        'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
+                        borderColor: ['rgb(255, 99, 132,1.5)', 'rgba(54, 162, 235, 1.5)', 'rgba(255, 206, 86, 1.5)', 'rgba(75, 192, 192, 1.5)', 'rgba(153, 102, 255, 1.5)', 'rgba(255, 159, 64, 1.5)'], 
+                        data: {{having_list[3]  | safe }}
+                    }]
+                    }, 
+                // Configuration options go here
+                options: {
+                    lineAt: 100,
+                    title: { 
+                        display: true, 
+                        text: '{{disease_list[3]}}', 
+                        fontSize: 30, 
+                        fontColor: 'rgba(107, 102, 255, 1)' 
+                    },
+                    legend: {
+                        labels: {
+                            fontColor: 'rgba(83, 51, 237, 1)',
+                            fontSize: 15 } 
+                        },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontColor: 'rgba(27, 163, 156, 1)',
+                                fontSize: 15 
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                fontColor: 'rgba(246, 36, 89, 1)',
+                                fontSize: 15
+                            } 
+                        }] 
+                    } 
+                } 
+            });
+        </script>
+        <script>
+            const ctx6 = document.getElementById('histogram6');
+            const chart6 = new Chart(ctx6, {
+                // The type of chart we want to create
+                type: 'bar',
+                // The data for our dataset
+                data: { labels: {{ nutri_name_list[4] | safe }},
+                    datasets: [
+                    { 
+                        label: '영양소 섭취량(%)',
+                        type: 'bar',
+                        backgroundColor: [ 'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)', 
+                                        'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
+                        borderColor: ['rgb(255, 99, 132,1.5)', 'rgba(54, 162, 235, 1.5)', 'rgba(255, 206, 86, 1.5)', 'rgba(75, 192, 192, 1.5)', 'rgba(153, 102, 255, 1.5)', 'rgba(255, 159, 64, 1.5)'], 
+                        data: {{having_list[4] | safe }}
+                    }]
+                    }, 
+                // Configuration options go here
+                options: {
+                    lineAt: 100,
+                    title: { 
+                        display: true, 
+                        text: '{{disease_list[4]}}', 
                         fontSize: 30, 
                         fontColor: 'rgba(107, 102, 255, 1)' 
                     },

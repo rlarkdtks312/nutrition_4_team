@@ -65,11 +65,15 @@ async def user_info(response: Response, request: Request, KEY: Optional[str]):
     return templates.TemplateResponse("main.html", {"request": request })
 
 @app.post('/print', response_class=HTMLResponse)
-async def get_page(request: Request, img_s: UploadFile = File(...), disease : str= Form(...)):
+async def get_page(request: Request, img_s: UploadFile = File(...), disease : list= Form(...)):
     ## 질병명 저장하기
     f = open('./disease/disease.txt', 'w')
     f.write(f'{disease}')
     f.close()
+    
+    with open('./disease/disease.pickle', 'wb') as f:
+      pickle.dump(disease, f, pickle.HIGHEST_PROTOCOL)
+      
     ## 업로드한 {img_s.filename}으로 image폴더에 파일 저장하기
     file_location = f"./image/{img_s.filename}"
     with open(file_location, "wb+") as file_object:
@@ -88,7 +92,6 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : st
 
     ## 업로드한 이미지 파일 예측 수행 및 음식 리스트 생성
     my_func.pred(file_location)
-
     pred_file = file_location.split('/')[-1]
     pred_file_path = "../pred_image/result/"+pred_file
     global food_list
@@ -96,7 +99,7 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : st
       
     ## 예측된 음식의 영양성분을 가져와서 print 화면에 탭에 넣기
     df = pd.DataFrame(my_func.nutrition_info(food_list)[1])
-    food_info = df.to_html()
+    food_info = df.to_html(justify="center")
     
     
     
@@ -116,22 +119,38 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : st
             nutri_list[i+1] = round((nutri_list[i+1] / nutri_reco_id[i])*100, 2)
     nutri_list = nutri_list[:-2]
     
-    dise_nutri = my_func.nutri_limit([disease, gender, age_range])
-    df2 = dise_nutri[['영양성분', '섭취기준\n(1일)', '단위', '경고문구']]
-    df2 = df2.set_index('영양성분')
-    dise_info = df2.to_html()
+    
+    for idx, dise in enumerate(disease):
+      if idx == 0:
+        dise_nutri = my_func.nutri_limit([dise, gender, age_range])
+        total_df = dise_nutri[['질병명', '영양성분', '섭취기준\n(1일)', '단위', '경고문구']]
+      else:
+        dise_nutri = my_func.nutri_limit([dise, gender, age_range])
+        temp_df = dise_nutri[['질병명', '영양성분', '섭취기준\n(1일)', '단위', '경고문구']]
+        total_df = pd.concat([total_df, temp_df])
+    total_df = total_df.set_index('질병명')
+    dise_info = total_df.to_html(justify="center")
     
     temp = my_func.calc_nutri(gender, age_range, food_list)
     temp = pd.DataFrame(temp)
     temp.columns = ['경고메세지']
+    temp2 = temp.values
     temp = temp.style.hide_index()
-    messege = temp.to_html()
+    message = temp.to_html()
+    
+    temp2 = list(temp2)
+    temp_message = ''
+    for mess in temp2:
+          temp_message += mess
+    print('temp_message:', temp_message[0])
+    my_func.voice(temp_message[0])
+    fn = app.url_path_for('static', path='/voice.mp3')
+
   
     return templates.TemplateResponse("print.html", {"request": request, 'food_names': food_list, 
                                                      'email':email, 'gender':gender, 'age_range':age_range, 
                                                      'disease':disease, 'img_path':pred_file_path, 'nutri_list':nutri_list,
-                                                     'dise_info':dise_info, 'messege':messege,
-                                                     'food_info': food_info
+                                                     'dise_info':dise_info, 'food_info': food_info, 'fn': fn
                                                      }
                                       )
     
@@ -141,6 +160,9 @@ async def get_history(request: Request):
   disease = f.readline()
   f.close()
   
+  with open('./disease/disease.pickle', 'rb') as f:
+    disease_list = pickle.load(f)
+    
   ## 로그인 정보 가져오기
   with open('data/data.json', "r") as json_file:
     json_data = json.load(json_file)
@@ -189,39 +211,44 @@ async def get_history(request: Request):
   
   nutri_list = list(nutri_list)
   
-  energy_list = my_func.nutri_limit([disease, gender, age_range])
-  nutri_name = energy_list["영양성분"]
-  nutri_std = energy_list["섭취기준\n(1일)"].values
-  
-  unit = energy_list["단위"]
-  
-  cur_index = []
-  nutri_name = nutri_name.values
-  
-  for idx, column in enumerate(history.groupby(['id', 'date']).sum().reset_index()[condition2].columns):
-      for name in nutri_name:
-        if column == '에너지(kcal)':
-            if '열량' == name:
-                cur_index.append(idx)
-        elif column.split('(')[0] == name:
-              cur_index.append(idx)
-  
-  having = history.groupby(['id', 'date']).sum().reset_index()[condition2].iloc[:,cur_index].values[0]
-  print(having)
-  print(nutri_name)
-  for i in range(len(nutri_std)):
-    having[i] = round((having[i] / nutri_std[i])*100, 2)
+  ## 질병 별 그래프 그리기
+  having_list = []
+  nutri_name_list = []
+  for disease in disease_list:
+    energy_list = my_func.nutri_limit([disease, gender, age_range])
+    nutri_name = energy_list["영양성분"]
+    nutri_std = energy_list["섭취기준\n(1일)"].values
     
-  for i in range(len(nutri_name)):
-        nutri_name[i] += unit[i]
-  
-  having = list(having)
-  print(having)
-  
-  nutri_name = list(nutri_name)
-  
-  print(nutri_name)
-  return templates.TemplateResponse("history.html", {"request": request, 'nutri_list':nutri_list, 'nutri_name':nutri_name, 'having':having})
+    unit = energy_list["단위"]
+    
+    cur_index = []
+    nutri_name = nutri_name.values
+    
+    for idx, column in enumerate(history.groupby(['id', 'date']).sum().reset_index()[condition2].columns):
+        for name in nutri_name:
+          if column == '에너지(kcal)':
+              if '열량' == name:
+                  cur_index.append(idx)
+          elif column.split('(')[0] == name:
+                cur_index.append(idx)
+    
+    having = history.groupby(['id', 'date']).sum().reset_index()[condition2].iloc[:,cur_index].values[0]
+    for i in range(len(nutri_std)):
+      having[i] = round((having[i] / nutri_std[i])*100, 2)
+    
+    for i in range(len(nutri_name)):
+          nutri_name[i] += unit[i]
+    
+    having = list(having)
+    nutri_name = list(nutri_name)
+    having_list.append(having)
+    nutri_name_list.append(nutri_name)
+    
+  for idx in range(len(disease_list)):
+      disease_list[idx] += ' 주의할 성분 성분 섭취량'
+
+  return templates.TemplateResponse("history.html", {"request": request, 'nutri_list':nutri_list, 'nutri_name_list':nutri_name_list, 'having_list':having_list, 
+                                                     'disease_list':disease_list})
 
 @app.get('/use', response_class=HTMLResponse)
 async def get_use(request: Request):

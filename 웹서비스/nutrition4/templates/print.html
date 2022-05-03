@@ -16,7 +16,7 @@
     <!-- 타이틀 -->
         <title>Nutrition_4</title>
     <!-- CSS 참조 -->
-        <link rel="stylesheet" href="../../static/style.css" />
+        <link rel="stylesheet" href="../static/style.css" />
     <!-- 폰트 -->
         <link
             href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
@@ -83,24 +83,30 @@
                         </div>
                     </div>
                     <div id="tab-4" class="tab-content">
-                        <p>{{ messege | safe }}</p>
-                        <script>
-                            alert('해윙');
-                        </script> 
+                        <p>{{ messege | safe }}</p> 
                     </div>
                 </div><br>
             
                 <button type="button" class="btn btn-secondary"><a href='/kakao' style="color: #ffffff">음식 사진 다시 올리기</a></button> &nbsp;&nbsp;
                 <button type="button" class="btn btn-secondary"><a href='/his' style="color: #ffffff">지금까지 내 음식 섭취 역사 보기</a></button> &nbsp;&nbsp;
+                <br>
+                <div style="color: rgb(255, 255, 255)">
+                    <input type="checkbox" id="layerPopup">
+                    <label for="layerPopup">
+                        팝업버튼
+                    </label>
+                    <div id="layer_bg" style="color: rgb(0, 0, 0)">
+                        <div id="popup">
+                            <h3>
+                                <p>경고메시지</p>
+                                <label for="layerPopup">X</label>
+                            </h3>
+                            <p>{{ messege | safe }}</p>
+                        </div>
+                    </div>
+                </div>
             </section>
         </center>
-                   
-        <script>
-            const result_02 = spawn('python', ['function_args.py', '카레유', '20']); 
-            result_02.stdout.on('data', (result)=>{ 
-                console.log(result.toString());
-            });
-        </script>
         <section class="section3">
             <!-- tab script -->
             <script language="javascript" type="text/javascript">
@@ -119,9 +125,14 @@
                 })
             </script>
         </section>
+        <div>
+            <audio autoplay>
+                <source src= {{ fn }} type="audio/mpeg">
+             </audio>
+        </div>
         <!-- scripts -->
         <script type='text/javascript'>
-            var ctx = document.getElementById('histogram');
+            const ctx = document.getElementById('histogram');
             Chart.pluginService.register({
                 afterDraw: function(chart) {
                     if (typeof chart.config.options.lineAt != 'undefined') {
@@ -143,7 +154,7 @@
                     }
                 }
             });
-            var chart = new Chart(ctx, {
+            const chart = new Chart(ctx, {
                 // The type of chart we want to create
                 type: 'bar',
                 // The data for our dataset
@@ -192,8 +203,8 @@
             });
         </script>
         <script type='text/javascript'>
-            var ctx2 = document.getElementById('histogram2');
-            var chart2 = new Chart(ctx2, {
+            const ctx2 = document.getElementById('histogram2');
+            const chart2 = new Chart(ctx2, {
                 // The type of chart we want to create
                 type: 'bar',
                 // The data for our dataset

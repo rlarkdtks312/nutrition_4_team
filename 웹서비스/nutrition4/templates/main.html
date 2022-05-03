@@ -16,13 +16,20 @@
     <!-- 타이틀 -->
         <title>Nutrition_4</title>
     <!-- CSS 참조 -->
-        <link rel="stylesheet" href="../../static/style.css" />
-        <!-- 폰트 -->
-            <link
-                href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
-                rel="stylesheet"/>
-        <!-- file upload -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="../static/style.css" />
+    <!-- 폰트 -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
+            rel="stylesheet"/>
+    <!-- file upload -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+    <!--폰트어썸 최신 CDN-->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+        />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     </head>
     <body>
         <!-- Navbar -->
@@ -79,13 +86,28 @@
                     <table>
                         <tr>
                             <td>
-                                <select name='disease'>
-                                    <option type='text', value='비만'>비만</option>
-                                    <option type='text', value='고혈압'>고혈압</option>
-                                    <option type='text', value='고지혈증'>고지혈증</option>
-                                    <option type='text', value='당뇨'>당뇨</option>
-                                    <option type='text', value='신부전증'>신부전증</option>
-                                </select>
+                                <p class="chk_box">
+                                    <input type="checkbox" id="chk_top1" name = 'disease' value='비만'/>
+                                    <label for="chk_top1">
+                                        <span style="color: rgb(255, 255, 255)"> 비만 </span>
+                                    </label><br />
+                                    <input type="checkbox" id="chk_top2" name = 'disease' value='고혈압'/>
+                                    <label for="chk_top2">
+                                        <span style="color: rgb(255, 255, 255)"> 고혈압 </span>
+                                    </label><br />
+                                    <input type="checkbox" id="chk_top3" name = 'disease' value='당뇨'/>
+                                    <label for="chk_top3">
+                                        <span style="color: rgb(255, 255, 255)"> 당뇨 </span>
+                                    </label><br />
+                                    <input type="checkbox" id="chk_top4" name = 'disease' value='신부전증'/>
+                                    <label for="chk_top4">
+                                        <span style="color: rgb(255, 255, 255)"> 신부전증 </span>
+                                    </label><br />
+                                    <input type="checkbox" id="chk_top5" name = 'disease' value='고지혈증' />
+                                    <label for="chk_top5">
+                                        <span style="color: rgb(255, 255, 255)"> 고지혈증 </span>
+                                    </label><br />
+                                 </p>                                 
                             </td>
                             <td>
                                 <div class='pt-2 mb-2 submitbutton'>
