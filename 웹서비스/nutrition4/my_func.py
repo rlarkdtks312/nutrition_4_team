@@ -193,7 +193,7 @@ def voice(text):
     client_id = "fr2pmzwe08"
     client_secret = "uzTbsKj83c57qTJNlHRbeIsTiwDdVoZLKDod8UBh"
     encText = urllib.parse.quote(text)
-    data = "speaker=nsinu&volume=0&speed=-2&pitch=0&format=mp3&text=" + encText
+    data = "speaker=nminseo&volume=-3&speed=-2&pitch=0&format=mp3&text=" + encText
     url = "https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts"
     request = urllib.request.Request(url)
     request.add_header("X-NCP-APIGW-API-KEY-ID", client_id)
