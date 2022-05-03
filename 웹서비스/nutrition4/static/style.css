@@ -1,4 +1,9 @@
 /* 바디 */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 body {
   font-family: "Gowun Dodum";
   background-repeat: no-repeat;
