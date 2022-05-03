@@ -107,6 +107,16 @@
                 </div>
             </section>
         </center>
+        <script>
+            let mes = {{ temp_message }};
+            
+            if (mes){
+                swal("초과한 영양소가 있습니다!", "경고메시지를 확인해주세요!");
+            }
+            else{
+                swal("적절한 식단입니다");
+            }
+        </script>
         <section class="section3">
             <!-- tab script -->
             <script language="javascript" type="text/javascript">

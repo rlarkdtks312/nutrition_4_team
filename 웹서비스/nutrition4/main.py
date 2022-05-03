@@ -67,10 +67,6 @@ async def user_info(response: Response, request: Request, KEY: Optional[str]):
 @app.post('/print', response_class=HTMLResponse)
 async def get_page(request: Request, img_s: UploadFile = File(...), disease : list= Form(...)):
     ## 질병명 저장하기
-    f = open('./disease/disease.txt', 'w')
-    f.write(f'{disease}')
-    f.close()
-    
     with open('./disease/disease.pickle', 'wb') as f:
       pickle.dump(disease, f, pickle.HIGHEST_PROTOCOL)
       
@@ -100,8 +96,6 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : li
     ## 예측된 음식의 영양성분을 가져와서 print 화면에 탭에 넣기
     df = pd.DataFrame(my_func.nutrition_info(food_list)[1])
     food_info = df.to_html(justify="center")
-    
-    
     
     ## histoty histogram
     nutri_reco = my_func.nutri_reco()
@@ -142,24 +136,21 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : li
     temp_message = ''
     for mess in temp2:
           temp_message += mess
-    print('temp_message:', temp_message[0])
-    my_func.voice(temp_message[0])
-    fn = app.url_path_for('static', path='/voice.mp3')
 
+    my_func.voice("권장량을 초과한 영양소가 있습니다! 경고메시지를 확인해주세요!")
+    fn = app.url_path_for('static', path='/voice.mp3')
   
     return templates.TemplateResponse("print.html", {"request": request, 'food_names': food_list, 
                                                      'email':email, 'gender':gender, 'age_range':age_range, 
                                                      'disease':disease, 'img_path':pred_file_path, 'nutri_list':nutri_list,
-                                                     'dise_info':dise_info, 'food_info': food_info, 'fn': fn
+                                                     'dise_info':dise_info, 'food_info': food_info, 'fn': fn, 'message': message,
+                                                     
                                                      }
                                       )
     
 @app.get('/his', response_class=HTMLResponse)
 async def get_history(request: Request):
-  f = open('./disease/disease.txt', 'r')
-  disease = f.readline()
-  f.close()
-  
+  ## 질병명 저장하기
   with open('./disease/disease.pickle', 'rb') as f:
     disease_list = pickle.load(f)
     
