@@ -12,8 +12,6 @@ import matplotlib.pyplot as plt
 import yaml
 import urllib.request
 
-
-
 def pred(img_path):
     result_file_path = './pred_image/result'
     if os.path.exists(result_file_path):
@@ -207,4 +205,3 @@ def voice(text):
     else:
         errormsg = ("Error Code:" + rescode)
         return errormsg
-

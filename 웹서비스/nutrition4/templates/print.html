@@ -16,7 +16,7 @@
     <!-- 타이틀 -->
         <title>Nutrition_4</title>
     <!-- CSS 참조 -->
-        <link rel="stylesheet" href="../static/style.css" />
+        <link rel="stylesheet" href="../../static/style.css" />
     <!-- 폰트 -->
         <link
             href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
@@ -27,6 +27,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </head>
     <body>
         <!-- Navbar -->
@@ -40,10 +41,14 @@
             </ol>
         </nav>
         
-
         <center>
             <!-- print content .section -->
             <section class="section">
+                <!-- <div>
+                    <audio autoplay controls>
+                        <source src= {{ fn }} type="audio/mpeg">
+                     </audio>
+                </div> -->
                 <div class="container main-container">
                     <h2 class="title">개인 맞춤형 식단 필터링</h2>
                     <h5 class="subtitle">성별/나이정보 동기화기반 서비스</h5>
@@ -83,30 +88,14 @@
                         </div>
                     </div>
                     <div id="tab-4" class="tab-content">
-                        <p>{{ messege | safe }}</p> 
+                        <p>{{ message | safe }}</p>
                     </div>
                 </div><br>
-            
                 <button type="button" class="btn btn-secondary"><a href='/kakao' style="color: #ffffff">음식 사진 다시 올리기</a></button> &nbsp;&nbsp;
                 <button type="button" class="btn btn-secondary"><a href='/his' style="color: #ffffff">지금까지 내 음식 섭취 역사 보기</a></button> &nbsp;&nbsp;
-                <br>
-                <div style="color: rgb(255, 255, 255)">
-                    <input type="checkbox" id="layerPopup">
-                    <label for="layerPopup">
-                        팝업버튼
-                    </label>
-                    <div id="layer_bg" style="color: rgb(0, 0, 0)">
-                        <div id="popup">
-                            <h3>
-                                <p>경고메시지</p>
-                                <label for="layerPopup">X</label>
-                            </h3>
-                            <p>{{ messege | safe }}</p>
-                        </div>
-                    </div>
-                </div>
+                <br><br>
             </section>
-        </center>
+        </center>         
         <script>
             let mes = {{ temp_message }};
             
@@ -135,14 +124,9 @@
                 })
             </script>
         </section>
-        <div>
-            <audio autoplay>
-                <source src= {{ fn }} type="audio/mpeg">
-             </audio>
-        </div>
         <!-- scripts -->
         <script type='text/javascript'>
-            const ctx = document.getElementById('histogram');
+            var ctx = document.getElementById('histogram');
             Chart.pluginService.register({
                 afterDraw: function(chart) {
                     if (typeof chart.config.options.lineAt != 'undefined') {
@@ -164,12 +148,12 @@
                     }
                 }
             });
-            const chart = new Chart(ctx, {
+            var chart = new Chart(ctx, {
                 // The type of chart we want to create
                 type: 'bar',
                 // The data for our dataset
-                data: { labels: ['에너지', '탄수화물', '당류', '지방', '단백질', '칼슘',
-                                '인', '나트륨', '칼륨', '마그네슘', '철', '아연'],
+                data: { labels: ['에너지(kcal)', '탄수화물(g)', '당류(g)', '지방(g)', '단백질(g)', '칼슘(mg)',
+                                '인(mg)', '나트륨(mg)', '칼륨(mg)', '마그네슘(mg)', '철(mg)', '아연(mg)'],
                     datasets: [
                     {
                         label: '영양소 섭취량(%)',
@@ -213,8 +197,8 @@
             });
         </script>
         <script type='text/javascript'>
-            const ctx2 = document.getElementById('histogram2');
-            const chart2 = new Chart(ctx2, {
+            var ctx2 = document.getElementById('histogram2');
+            var chart2 = new Chart(ctx2, {
                 // The type of chart we want to create
                 type: 'bar',
                 // The data for our dataset

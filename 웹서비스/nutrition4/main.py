@@ -144,7 +144,7 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : li
                                                      'email':email, 'gender':gender, 'age_range':age_range, 
                                                      'disease':disease, 'img_path':pred_file_path, 'nutri_list':nutri_list,
                                                      'dise_info':dise_info, 'food_info': food_info, 'fn': fn, 'message': message,
-                                                     
+                                                     'temp_message': temp_message
                                                      }
                                       )
     
