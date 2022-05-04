@@ -16,38 +16,53 @@
     <!-- 타이틀 -->
         <title>Nutrition_4</title>
     <!-- CSS 참조 -->
-        <link rel="stylesheet" href="../static/style.css" />
-    <!-- 폰트 -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
-            rel="stylesheet"/>
-    <!-- file upload -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
-    <!--폰트어썸 최신 CDN-->
-        <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-        />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
+        <link rel="stylesheet" href="../../static/style.css" />
+        <!-- 폰트 -->
+            <link
+                href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
+                rel="stylesheet"/>
+        <!-- file upload -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     </head>
     <body>
         <!-- Navbar -->
-        <nav class="navbar navbar-ligth" style="background-color: #fcd6f9ec;">
+        <nav class="navbar navbar-ligth">
             <!-- Navbar content -->
-            <ol class="breadcrumb">
-                &nbsp;&nbsp;&nbsp; <img src="../img/1f951.svg" width="25" height="25"/> &nbsp;&nbsp;
-                <li class="breadcrumb-item"><a href="/" style="color: #000000">로그인 화면</a></li>
-                <li class="breadcrumb-item"><a href="/kakao" style="color: #000000">음식 사진 올리기</a></li>
-                <li class="breadcrumb-item"><a href="/his" style="color: #000000">지금까지 내 음식 섭취 역사 보기</a></li>
-            </ol>
+            <div class="container-fluid">
+                <ol class="mt-2 breadcrumb">
+                    &nbsp;&nbsp;&nbsp;
+                    <li class="breadcrumb-item">
+                        <button type="button" class="btn btn-secondary btn-sm"><a href="/" style="color: #ffffff">로그인</a></button>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <button type="button" class="btn btn-secondary btn-sm"><a href="#" style="color: #ffffff">음식사진입력</a></button>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <button type="button" class="btn btn-secondary btn-sm"><a href="/his" style="color: #ffffff">히스토리</a></button>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <button type="button" class="btn btn-secondary btn-sm">
+                            <a href="javascript:history.back()" style="color: #ffffff">
+                                <img src="../img/arrow-left.svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                뒤로가기
+                            </a>
+                        </button>
+                    </li>
+                </ol>
+                <button type="button" class="btn btn-secondary btn-sm">
+                    <a href="https://github.com/rlarkdtks312/nutrition_4_team" style="color: #ffffff">
+                        영양4조의 GITHUB
+                    </a>
+                </button>
+            </div>
         </nav>
         <center>
             <!-- main content .section -->
             <section class="section">
                 <div class="container main-container">
-                    <h2 class="title">개인 맞춤형 식단 필터링</h2>
-                    <h5 class="subtitle">성별/나이정보 동기화기반 서비스</h5>
+                    <h2 class="title">:: WI-ME ::</h2>
+                    <h5 class="subtitle">개인 맞춤형 식단 필터링 성별/나이정보 동기화기반 서비스</h5>
                 </div>
             </section><br>
             <!-- main content .section2 -->
@@ -86,32 +101,41 @@
                     <table>
                         <tr>
                             <td>
-                                <p class="chk_box">
-                                    <input type="checkbox" id="chk_top1" name = 'disease' value='비만'/>
-                                    <label for="chk_top1">
-                                        <span style="color: rgb(255, 255, 255)"> 비만 </span>
-                                    </label><br />
-                                    <input type="checkbox" id="chk_top2" name = 'disease' value='고혈압'/>
-                                    <label for="chk_top2">
-                                        <span style="color: rgb(255, 255, 255)"> 고혈압 </span>
-                                    </label><br />
-                                    <input type="checkbox" id="chk_top3" name = 'disease' value='당뇨'/>
-                                    <label for="chk_top3">
-                                        <span style="color: rgb(255, 255, 255)"> 당뇨 </span>
-                                    </label><br />
-                                    <input type="checkbox" id="chk_top4" name = 'disease' value='신부전증'/>
-                                    <label for="chk_top4">
-                                        <span style="color: rgb(255, 255, 255)"> 신부전증 </span>
-                                    </label><br />
-                                    <input type="checkbox" id="chk_top5" name = 'disease' value='고지혈증' />
-                                    <label for="chk_top5">
-                                        <span style="color: rgb(255, 255, 255)"> 고지혈증 </span>
-                                    </label><br />
-                                 </p>                                 
+                                <table class='disease_chk'>
+                                    <tr>
+                                        <td style="padding: 15px; padding-bottom: 0px;">
+                                            <p class="chk_box">
+                                                <input type="checkbox" id="chk_top1" name = 'disease' value='비만' checked/>
+                                                <label for="chk_top1">
+                                                    <span style="color: rgb(255, 255, 255)"> 비만 </span>
+                                                </label><br />
+                                                <input type="checkbox" id="chk_top2" name = 'disease' value='고혈압'/>
+                                                <label for="chk_top2">
+                                                    <span style="color: rgb(255, 255, 255)"> 고혈압 </span>
+                                                </label><br />
+                                                <input type="checkbox" id="chk_top3" name = 'disease' value='당뇨'/>
+                                                <label for="chk_top3">
+                                                    <span style="color: rgb(255, 255, 255)"> 당뇨 </span>
+                                                </label><br />
+                                                <input type="checkbox" id="chk_top4" name = 'disease' value='신부전증'/>
+                                                <label for="chk_top4">
+                                                    <span style="color: rgb(255, 255, 255)"> 신부전증 </span>
+                                                </label><br />
+                                                <input type="checkbox" id="chk_top5" name = 'disease' value='고지혈증' />
+                                                <label for="chk_top5">
+                                                    <span style="color: rgb(255, 255, 255)"> 고지혈증 </span>
+                                                </label><br />
+                                             </p>    
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </td>
                             <td>
                                 <div class='pt-2 mb-2 submitbutton'>
-                                    &nbsp;&nbsp;<input type="submit" class="btn btn-danger" Value='분석'>
+                                    <input type="submit" class="btn btn-danger" Value='분석'>
                                 </div>
                             </td>
                         </tr>

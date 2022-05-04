@@ -16,7 +16,7 @@
     <!-- 타이틀 -->
         <title>Nutrition_4</title>
     <!-- CSS 참조 -->
-        <link rel="stylesheet" href="../static/style.css" />
+        <link rel="stylesheet" href="../../static/style.css" />
         <!-- 폰트 -->
             <link
                 href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
@@ -30,20 +30,32 @@
     </head>
     <body>
         <!-- Navbar -->
-        <nav class="navbar navbar-ligth" style="background-color: #fcd6f9ec;">
+        <nav class="navbar navbar-ligth">
             <!-- Navbar content -->
-            <ol class="breadcrumb">
-                &nbsp;&nbsp;&nbsp; <img src="../img/1f951.svg" width="25" height="25"/> &nbsp;&nbsp;
-                <li class="breadcrumb-item"><a href="/use" style="color: #000000">::박상우의 wi-me:: 사용방법</a></li>
-                <li class="breadcrumb-item"><a href="https://github.com/rlarkdtks312/nutrition_4_team" style="color: #000000">영양4조의 GITHUB</a></li>
-            </ol>
+            <div class="container-fluid">
+                <ol class="mt-2 breadcrumb">
+                    &nbsp;&nbsp;&nbsp;
+                    <li class="breadcrumb-item">
+                        <button type="button" class="btn btn-secondary btn-sm">
+                            <a href="/use" style="color: #ffffff">
+                                ::WI-ME:: 사용방법
+                            </a>
+                        </button>
+                    </li>
+                </ol>
+                <button type="button" class="btn btn-secondary btn-sm">
+                    <a href="https://github.com/rlarkdtks312/nutrition_4_team" style="color: #ffffff">
+                        영양4조의 GITHUB
+                    </a>
+                </button>
+            </div>
         </nav>
         <center>
             <!-- history content .section -->
             <section class="section">
                 <div class="container main-container">
-                    <h2 class="title">개인 맞춤형 식단 필터링</h2>
-                    <h5 class="subtitle">성별/나이정보 동기화기반 서비스</h5>
+                    <h2 class="title">:: WI-ME ::</h2>
+                    <h5 class="subtitle">개인 맞춤형 식단 필터링 성별/나이정보 동기화기반 서비스</h5>
                 </div>
             </section>
             <!-- background image space -->

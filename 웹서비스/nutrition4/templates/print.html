@@ -31,27 +31,67 @@
     </head>
     <body>
         <!-- Navbar -->
-        <nav class="navbar navbar-ligth" style="background-color: #fcd6f9ec;">
+        <nav class="navbar navbar-ligth">
             <!-- Navbar content -->
-            <ol class="breadcrumb">
-                &nbsp;&nbsp;&nbsp; <img src="../img/1f951.svg" width="25" height="25"/> &nbsp;&nbsp;
-                <li class="breadcrumb-item"><a href="/" style="color: #000000">로그인 화면</a></li>
-                <li class="breadcrumb-item"><a href="/kakao" style="color: #000000">음식 사진 다시 올리기</a></li>
-                <li class="breadcrumb-item"><a href="/his" style="color: #000000">지금까지 내 음식 섭취 역사 보기</a></li>
-            </ol>
+            <div class="container-fluid">
+                <ol class="mt-2 breadcrumb">
+                    <li class="breadcrumb-item">
+                        <button type="button" class="btn btn-secondary btn-sm">
+                            <a href="/use" style="color: #ffffff">
+                                ::WI-ME:: 사용방법
+                            </a>
+                        </button>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <button type="button" class="btn btn-secondary btn-sm">
+                            <a href="/kakao" style="color: #ffffff">
+                                음식사진입력
+                            </a>
+                        </button>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <button type="button" class="btn btn-secondary btn-sm">
+                            <a href="/his" style="color: #ffffff">
+                                히스토리
+                            </a>
+                        </button>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <button type="button" class="btn btn-secondary btn-sm">
+                            <a href="javascript:history.back()" style="color: #ffffff">
+                                <img src="../img/arrow-left.svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                뒤로가기
+                            </a>
+                        </button>
+                    </li>
+                </ol>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <table>
+                    <tr>
+                        <td>
+                            <div>
+                                <audio class='audio_auto' id="myAudio" autoplay controls>
+                                    <source src= {{ fn }} type="audio/mpeg">
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-sm">
+                                <a href="https://github.com/rlarkdtks312/nutrition_4_team" style="color: #ffffff">
+                                    영양4조의 GITHUB
+                                </a>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </nav>
-        
         <center>
             <!-- print content .section -->
             <section class="section">
-                <!-- <div>
-                    <audio autoplay controls>
-                        <source src= {{ fn }} type="audio/mpeg">
-                     </audio>
-                </div> -->
                 <div class="container main-container">
-                    <h2 class="title">개인 맞춤형 식단 필터링</h2>
-                    <h5 class="subtitle">성별/나이정보 동기화기반 서비스</h5>
+                    <h2 class="title">:: WI-ME ::</h2>
+                    <h5 class="subtitle">개인 맞춤형 식단 필터링 성별/나이정보 동기화기반 서비스</h5>
                 </div>
             </section><br>
 
@@ -68,11 +108,10 @@
                         <li class="tab-link current" data-tab="tab-1">현재식단의 영양성분</li>
                         <li class="tab-link" data-tab="tab-2">한끼 권장량별 성분</li>
                         <li class="tab-link" data-tab="tab-3">질병별 주의할 성분</li>
-                        <li class="tab-link" data-tab="tab-4">경고메시지</li>
+                        <li class="tab-link" id='warn-tab' data-tab="tab-4">경고메시지</li>
                     </ul>
                     <!-- tab contents -->
                     <div id="tab-1" class="tab-content current">
-                    <!-- <canvas id="histogram"></canvas> -->
                         <p>섭취한 음식명 : {{ food_names }} </p>                               
                         <center>
                             {{ food_info | safe }}
@@ -91,19 +130,41 @@
                         <p>{{ message | safe }}</p>
                     </div>
                 </div><br>
-                <button type="button" class="btn btn-secondary"><a href='/kakao' style="color: #ffffff">음식 사진 다시 올리기</a></button> &nbsp;&nbsp;
-                <button type="button" class="btn btn-secondary"><a href='/his' style="color: #ffffff">지금까지 내 음식 섭취 역사 보기</a></button> &nbsp;&nbsp;
-                <br><br>
+                <table>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-secondary">
+                                <a href='/kakao' style="color: #ffffff">
+                                    음식사진 다시 올리기
+                                </a>
+                            </button>
+                        </td>
+                        <td>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                            
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success">
+                                <a href='/his' style="color: #ffffff">
+                                    ★ 히스토리 저장하기 ★
+                                </a>
+                            </button>
+                        </td>
+                    </tr>
+                </table><br><br>
             </section>
         </center>         
         <script>
-            let mes = {{ temp_message }};
+            let mes = {{ temp_message | safe }};
             
             if (mes){
                 swal("초과한 영양소가 있습니다!", "경고메시지를 확인해주세요!");
             }
             else{
+                var vid = document.getElementById("myAudio");
+                vid.muted = true;
                 swal("적절한 식단입니다");
+                $('.audio_auto').hide();
+                $('#warn-tab').hide();
             }
         </script>
         <section class="section3">

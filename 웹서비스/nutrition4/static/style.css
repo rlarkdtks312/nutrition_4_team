@@ -1,8 +1,7 @@
-/* 바디 */
+/* Tag */
 body {
 	font-family: 'Gowun Dodum';
 	/* background-image: url('../img/korean_food.jpg'); */
-	/* background-image: url('https://image.shutterstock.com/image-photo/health-food-fitness-conceptwith-immune-600w-743959498.jpg'); */
 	background-repeat: no-repeat;
 	background-position: center;
 	background-color: #131313f3;
@@ -10,9 +9,24 @@ body {
 	background-attachment: fixed;
 	background-size: 900px, 1200px;
 }
-.p {
-	color:rgba(255, 169, 244, 0.9)
+a {
+	text-decoration-line : none;
 }
+
+/* navbar */
+.navbar-ligth {
+	background-color: #fcd6f9;
+	font-family: 'Malgun Gothic';
+}
+.btn-sm {
+	background-color:rgb(255, 115, 197)
+}
+
+/* audio */
+audio { 
+	width: 200px; 
+}
+
 /* 제목 */
 .title {
 	font-family: 'Gowun Dodum';
@@ -31,6 +45,7 @@ body {
 .section {
 	margin-top: 30px;
 }
+
 /* 컨테이너 */
 .main-container {
 	font-family: 'Gowun Dodum';
@@ -43,6 +58,11 @@ body {
 	/* margin: 0 auto */
 	/* width: 600px; */
 }
+.container{
+	width: 800px;
+	margin: 0 auto;
+}
+
 /* 탭 */
 ul.tabs{
 	margin: 0px;
@@ -56,26 +76,30 @@ ul.tabs li{
 	padding: 10px 15px;
 	cursor: pointer;
 }
-
 ul.tabs li.current{
 	background: #ededed;
 	color: #222;
 }
-
 .tab-content{
 	display: none;
 	background: #ededed;
 	padding: 15px;
 }
-
 .tab-content.current{
 	display: inherit;
 }
 
-.container{
-	width: 800px;
-	margin: 0 auto;
+/* checkbox */
+.chk_box {
+	font-family: 'Malgun Gothic';
 }
+.disease_chk {
+	border: 2px solid #ffffff;
+	line-height: 30px;
+	height: 100px;
+	width: 120px;
+}
+
 /* 테이블 */
 table.dataframe {
 	border-collapse: collapse;
@@ -96,6 +120,7 @@ table.dataframe {
 	vertical-align: top;
 	border: 1px solid #ccc;
   }
+
 /* 파일업로드 */
 .file-upload {
 	/* width: 914px; */
@@ -148,6 +173,7 @@ table.dataframe {
 	padding: 0 15px 15px;
 	color: #222;
 }
+
 /* 이미지 삭제 */
 .drag-text {
 	text-align: center;
@@ -201,13 +227,6 @@ table.dataframe {
 	border: 0;
 	transition: all 0.2s ease;
 }
-/* 네비게이터 */
-.navbar-light .navbar-brand {
-	font-family: 'Gowun Dodum';
-	line-height: 1.68;
-	text-align: left;
-	color: #35465d;
-}
 
 /* On screens that are 600px or less, set the background color to olive */
 @media screen and (max-width: 600px) {
@@ -217,26 +236,6 @@ table.dataframe {
 	.navbar-brand {
 		font-size: 2rem;
 	}
-}
-
-.github-link {
-	font-family: 'Gowun Dodum';
-	font-weight: bolder;
-	font-size: 1.0rem;
-	line-height: 1.71;
-	text-align: center;
-	color: #000000;
-	text-decoration: underline;
-}
-
-.github-link hover {
-	font-family: 'Gowun Dodum';
-	font-weight: bolder;
-	font-size: 1.0rem;
-	line-height: 1.71;
-	text-align: center;
-	color: #2fb004;
-	text-decoration: underline;
 }
 .upload-text {
 	width: 50%;
@@ -248,98 +247,3 @@ table.dataframe {
 	margin: 0 auto;
 }
 
-details {
-	width: 700px;
-	background: #f0f0f0;
-	border: 1px solid #ff7bff;
-	padding: 20px;
-	margin-bottom: 5px;
-}
-
-summary {
-	width: 100%;
-	border: 1px solid #ff7bff;
-	cursor: pointer;
-	font-weight: bold;
-	font-size: 1.1em;
-}
-
-/* 체크 박스 */
-/*input 은 숨겨주기*/
-input#chk_top{
-	display:none;
-}
-/*input 바로 다음의 label*/
-input#chk_top + label{
-	cursor:pointer;
-}
-
-/*input 바로 다음의 label:before 에 체크하기 전 CSS 설정*/
-input#chk_top + label:before{
-	content:"";
-	display:inline-block;
-	width:17px;
-	height:17px;
-	line-height:17px;
-	border:1px solid #cbcbcb;
-	vertical-align:middle;/*체크 전과 체크 후 높이 차이 때문에 설정*/
-}
-
-/*checked된 input 바로 다음의 label:before 에 체크 후 CSS 설정*/  
-input#chk_top:checked + label:before{
-	content:"\f00c";/*폰트어썸 유니코드*/
-	font-family:"Font Awesome 5 free"; /*폰트어썸 아이콘 사용*/
-	font-weight:900;/*폰트어썸 설정*/
-	color:rgb(157, 255, 0);
-	background-color:rgb(255, 255, 255);
-	border-color:#000;
-	font-size:13px;
-	text-align:center;
-}
-/* 팝업 창 */
-/* #layerPopup {
-	display: none;
-  }
-   */
-#layerPopup + label {
-display: inline-block;
-padding: 7px 14px;
-background: #333;
-color: #fff;
-}
-
-#layer_bg {
-display: none;
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.5);
-}
-
-#layer_bg > #popup {
-position: absolute;
-padding: 15px;
-box-sizing: border-box;
-border-radius: 15px;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-width: 300px;
-height: 200px;
-background: #fff;
-box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.2);
-}
-
-#layer_bg > #popup > h2 {
-margin-bottom: 25px;
-}
-
-#layer_bg > #popup > h2 > label {
-float: right;
-}
-
-#layerPopup:checked + label + #layer_bg {
-display: block;
-}
