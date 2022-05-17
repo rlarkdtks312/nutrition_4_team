@@ -33,7 +33,7 @@ async def read_page(request: Request):
 @app.get("/kakao")
 async def kakao():
     REST_API_KEY = "7f4c07a7aabae79cb7848959a5d66f37"
-    REDIRECT_URI = "http://110.165.18.242:8000/oauth"
+    REDIRECT_URI = "http://localhost:8000/oauth"
     url = f"https://kauth.kakao.com/oauth/authorize?client_id={REST_API_KEY}&response_type=code&redirect_uri={REDIRECT_URI}"
     response = RedirectResponse(url)
     return response
@@ -42,11 +42,11 @@ async def kakao():
 @app.get('/oauth')
 async def kakaoAuth(response: Response, code: Optional[str]="NONE"):
     REST_API_KEY = "7f4c07a7aabae79cb7848959a5d66f37"
-    REDIRECT_URI = 'http://110.165.18.242:8000/oauth'
+    REDIRECT_URI = 'http://localhost:8000/oauth'
     _url = f'https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={REST_API_KEY}&code={code}&redirect_uri={REDIRECT_URI}'
     _res = requests.post(_url)
     _result = _res.json()
-    response = RedirectResponse('http://110.165.18.242:8000/info/{}'.format(_result['access_token']))
+    response = RedirectResponse('http://localhost:8000/info/{}'.format(_result['access_token']))
     return response
 
 # 쿼리 파라미터를 사용한 token 값 사용(개인 정보: 메일, 성별, 나이 얻기)
@@ -118,11 +118,13 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : li
     
     nutri_addition = my_func.nutri_add(food_list)
     nutri_list = list(nutri_addition.values())
+
     for i in range(len(nutri_reco_id)):
           if i == 0:
             nutri_list[i] = round((nutri_list[i] / list(energe['섭취기준(1일)'])[0])*300, 2)  
           else:
-            nutri_list[i+1] = round((nutri_list[i+1] / nutri_reco_id[i])*100, 2)
+            nutri_list[i] = round((nutri_list[i] / nutri_reco_id[i-1])*100, 2)
+            
     nutri_list = nutri_list[:-2]
     
     ## 질병별 주의할 성분 데이터 생성
@@ -149,7 +151,7 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : li
     temp_message = ''
     for mess in temp2:
           temp_message += mess
-
+    
     ## 네이버 클로바 TTS 서비스
     my_func.voice("권장량을 초과한 영양소가 있습니다! 경고메시지를 확인해주세요!")
     fn = app.url_path_for('static', path='/voice.mp3')
@@ -215,7 +217,7 @@ async def get_history(request: Request):
         if i == 0:
           nutri_list[i] = (nutri_list[i] / list(energy['섭취기준(1일)'])[0])*100  
         else:
-          nutri_list[i+1] = (nutri_list[i+1] / nutri_reco_id[i])*100
+          nutri_list[i] = (nutri_list[i] / nutri_reco_id[i-1])*100
           
   for idx, nutri in enumerate(nutri_list):
         nutri_list[idx] = round(nutri,2)

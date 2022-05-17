@@ -16,7 +16,7 @@ def pred(img_path):
     result_file_path = './pred_image/result'
     if os.path.exists(result_file_path):
         shutil.rmtree(result_file_path)
-    os.system(f'python ./yolov5/detect.py --weights ./yolov5/model/last.pt --img 640 --conf 0.3 --source "{img_path}" --save-txt --name result --project ./pred_image ')
+    os.system(f'python ./yolov5/detect.py --weights ./yolov5/model/last.pt --img 640 --conf 0.35 --source "{img_path}" --save-txt --name result --project ./pred_image ')
     global image_name
     image_name = img_path.split('/')[-1]
 
@@ -79,7 +79,6 @@ def calc_nutri(gender, age_range, food_list):
     conn = sqlite3.connect('./db/nutrition_recommend.db')
     sql = "select * from nutrition_recommend"
     nutri_reco = pd.read_sql(sql, conn)
-    
     df = nutri_reco[(nutri_reco['성별'] == gender) & (nutri_reco['연령']== age_range)]
     result = nutri_add(food_list)
     temp = []
