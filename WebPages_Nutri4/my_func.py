@@ -158,7 +158,7 @@ def nutri_reco():
 
 # 음식을 한글로 변환하기 위해 dictionary 및 pickle로 변환
 def make_pickle():
-    df = pd.read_csv('./[db]mapping(last_ver).csv')
+    df = pd.read_csv('./db/[db]mapping(last_ver).csv')
 
     name_dict = {}
     name_list = []
