@@ -13,20 +13,19 @@
 
 #### 설치 및 데모 실행
 
-- yolov5 수정 폴더를 nutrition4 폴더 내로 이동
+- 본 서비스를 저장할 곳에서 bash를 실행
+
+- clone git repository
+
+  ```bash
+  git clone https://github.com/rlarkdtks312/nutrition_4_team.git
+  ```
 
 - 아래 명령어 실행
 
-  ```python
-  git clone https://github.com/rlarkdtks312/nutrition_4_team.git
-  
-  cd nutrition4
+  ```bash
+  cd WebPage_Nutri4
   pip install -r requirements.txt
-  
-  cd yolo
-  pip install -r requirements.txt
-  
-  cd ../
   uvicorn main:app --reload
   ```
 
